@@ -1,0 +1,56 @@
+---
+globs: *.swift
+description: 네이밍 규칙 및 코딩 컨벤션
+---
+
+# 네이밍 규칙 및 코딩 컨벤션
+
+## 파일 네이밍 규칙
+- **폴더명**: PascalCase (예: `FantasticAnimation`)
+- **파일명**: `{FeatureName}{Type}.swift` (예: `FantasticAnimationView.swift`)
+- **클래스/구조체명**: PascalCase (예: `FantasticAnimationView`)
+
+## 네이밍 예시
+```
+NiceButton/                    # 폴더명
+├── NiceButtonView.swift       # SwiftUI 뷰
+├── NiceButtonViewModel.swift  # 뷰모델
+└── NiceButtonEntity.swift     # 엔티티
+
+DynamicCat/                    # 폴더명
+├── DynamicCatView.swift       # UIKit 뷰
+├── DynamicCatViewModel.swift  # 뷰모델
+└── DynamicCatEntity.swift     # 엔티티
+```
+
+## 클래스/구조체 네이밍
+- **뷰**: `{FeatureName}View` (SwiftUI), `{FeatureName}ViewController` (UIKit)
+- **뷰모델**: `{FeatureName}ViewModel`
+- **엔티티**: `{FeatureName}Entity`
+- **서비스**: `{FeatureName}Service`
+- **코디네이터**: `{FeatureName}Coordinator`
+
+## 변수/함수 네이밍
+- **변수/함수**: camelCase (예: `setupTableView()`)
+- **상수**: camelCase (예: `cellIdentifier`)
+- **프로토콜**: PascalCase + "able" 또는 "Protocol" (예: `Designable`, `DesignProtocol`)
+
+## Import 순서
+1. Foundation
+2. UIKit/SwiftUI
+3. Third-party libraries
+4. Local modules
+
+```swift
+import Foundation
+import UIKit
+import SwiftUI
+import Combine
+import SnapKit
+```
+
+## 코드 스타일
+- 한 줄에 최대 120자
+- 들여쓰기: 4칸 스페이스
+- 중괄호: 같은 줄에 시작
+- 세미콜론 사용하지 않음 (필수인 경우 제외)

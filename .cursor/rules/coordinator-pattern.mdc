@@ -1,0 +1,97 @@
+---
+alwaysApply: true
+---
+# 코디네이터 패턴 구현 규칙
+
+## 파일 구조
+```
+Coordinator/
+├── Core/                        # 코디네이터 핵심 구현
+│   ├── Coordinator.swift        # Coordinator 프로토콜, 확장, BaseCoordinator 포함
+│   ├── NavigationDestination.swift  # 네비게이션 목적지 정의
+│   ├── TabCoordinator.swift     # 메인 탭바 관리
+│   ├── SwiftUITabCoordinator.swift  # SwiftUI 탭 관리
+│   └── UIKitTabCoordinator.swift    # UIKit 탭 관리 (SwiftUI 기반)
+├── SwiftUI/                     # SwiftUI 탭별 코디네이터
+└── UIKit/                       # UIKit 탭별 코디네이터
+```
+
+## 기본 구조
+모든 코디네이터는 `Coordinator` 프로토콜을 준수해야 합니다.
+
+```swift
+protocol Coordinator: AnyObject, ObservableObject {
+    var childCoordinators: [any Coordinator] { get set }
+    var navigationPath: NavigationPath { get set }
+    
+    func navigate(to destination: NavigationDestination)
+    func start()
+    func finish()
+    func goBack()
+    func goFirst()
+}
+```
+
+## 코디네이터 네이밍 규칙
+- `TabCoordinator`: 메인 탭바 관리 (전체 앱의 탭 구조)
+- `SwiftUITabCoordinator`: SwiftUI 탭 관리 (순수 SwiftUI 구현)
+- `UIKitTabCoordinator`: UIKit 탭 관리 (SwiftUI 기반, 내부 디자인 화면만 UIKit)
+- `{FeatureName}Coordinator`: 특정 기능의 코디네이터
+
+## 구현 가이드
+1. `BaseCoordinator`를 상속받아 구현
+2. `start()` 메서드에서 화면 설정
+3. 자식 코디네이터는 `addChildCoordinator()`로 관리
+4. 완료 시 `finish()` 호출하여 메모리 정리
+
+## 탭 구조
+- **TabCoordinator**: 전체 앱의 탭바를 관리 (SwiftUI TabView 기반)
+- **SwiftUITabCoordinator**: SwiftUI 탭의 루트 뷰 설정 (순수 SwiftUI 구현)
+- **UIKitTabCoordinator**: UIKit 탭의 루트 뷰 설정 (SwiftUI 기반, 내부 디자인 화면만 UIKit)
+
+## 화면 전환
+- **SwiftUI 탭**: SwiftUI → SwiftUI: NavigationLink 사용
+- **UIKit 탭**: SwiftUI 기반으로 화면 전환 (NavigationLink 사용)
+- **UIKit 디자인 화면**: UIViewControllerRepresentable로 SwiftUI에 통합
+- **화면 전환 방식**:
+  - 탭 간 전환: SwiftUI TabView 사용
+  - 탭 내부 화면 전환: SwiftUI NavigationLink 사용
+  - UIKit 디자인 화면: UIViewControllerRepresentable로 래핑하여 SwiftUI에 통합
+
+## 기능별 코디네이터 추가
+
+### SwiftUI 기능 코디네이터
+```swift
+class SwiftUIFeatureCoordinator: BaseCoordinator {
+    override func start() {
+        // SwiftUI 기반이므로 NavigationPath를 통한 화면 전환 사용
+        let destination = NavigationDestination.featureView
+        navigate(to: destination)
+    }
+}
+```
+
+### UIKit 디자인 화면 코디네이터
+UIKit 디자인 화면은 UIViewControllerRepresentable로 래핑하여 SwiftUI에 통합:
+```swift
+class UIKitDesignCoordinator: BaseCoordinator {
+    override func start() {
+        // UIKit 디자인 화면도 NavigationPath를 통한 화면 전환 사용
+        let destination = NavigationDestination.uikitDesignView
+        navigate(to: destination)
+    }
+}
+
+// UIKitDesignView는 UIViewControllerRepresentable로 구현
+struct UIKitDesignView: UIViewControllerRepresentable {
+    let viewModel: DesignViewModel
+    
+    func makeUIViewController(context: Context) -> UIViewController {
+        return DesignViewController(viewModel: viewModel)
+    }
+    
+    func updateUIViewController(_ uiViewController: UIViewController, context: Context) {
+        // 업데이트 로직
+    }
+}
+```

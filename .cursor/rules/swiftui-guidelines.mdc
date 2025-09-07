@@ -1,0 +1,80 @@
+---
+globs: *View.swift
+description: SwiftUI 구현 가이드라인
+---
+
+# SwiftUI 구현 가이드라인
+
+## 기본 구조
+
+### 뷰모델이 필요한 경우
+```swift
+struct ComplexFeatureView: View {
+    @StateObject private var viewModel: ComplexFeatureViewModel
+    
+    var body: some View {
+        NavigationView {
+            // 뷰 구현
+        }
+    }
+}
+```
+
+### 뷰모델이 불필요한 경우
+```swift
+struct SimpleFeatureView: View {
+    @State private var isAnimating = false
+    
+    var body: some View {
+        NavigationView {
+            // 뷰 구현
+        }
+    }
+}
+```
+
+## 탭 뷰 구조
+```swift
+struct SwiftUITabView: View {
+    @StateObject private var viewModel = SwiftUITabViewModel()
+    @State private var showingSearch = false
+    
+    var body: some View {
+        NavigationView {
+            VStack(spacing: 0) {
+                categoryFilterView
+                designItemsList
+            }
+            .navigationTitle("SwiftUI")
+            .navigationBarTitleDisplayMode(.large)
+            .toolbar {
+                ToolbarItem(placement: .navigationBarTrailing) {
+                    Button("검색") {
+                        showingSearch = true
+                    }
+                }
+            }
+        }
+    }
+}
+```
+
+## UIViewControllerRepresentable 사용
+UIKit 코드를 SwiftUI에 통합할 때:
+```swift
+struct UIKitWrapper: UIViewControllerRepresentable {
+    func makeUIViewController(context: Context) -> UIViewController {
+        return SomeUIKitViewController()
+    }
+    
+    func updateUIViewController(_ uiViewController: UIViewController, context: Context) {
+        // 업데이트 로직
+    }
+}
+```
+
+## 스타일링 규칙
+- 일관된 색상 팔레트 사용
+- 적절한 패딩과 스페이싱
+- 접근성 고려 (accessibilityLabel, accessibilityHint)
+- 다크모드 지원

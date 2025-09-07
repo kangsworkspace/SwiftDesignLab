@@ -1,0 +1,55 @@
+---
+alwaysApply: true
+---
+# DIContainer 구현 규칙
+
+## DIContainer 구조
+```swift
+class DIContainer {
+    static let shared = DIContainer()
+    private var services: [String: Any] = [:]
+    
+    private init() {}
+    
+    func register<T>(_ type: T.Type, factory: @escaping () -> T) {
+        let key = String(describing: type)
+        services[key] = factory
+    }
+    
+    func resolve<T>(_ type: T.Type) -> T {
+        let key = String(describing: type)
+        guard let factory = services[key] as? () -> T else {
+            fatalError("Service not registered: \(type)")
+        }
+        return factory()
+    }
+}
+```
+
+## 서비스 등록
+```swift
+// DIContainer의 registerServices() 메서드에서 또는 앱 시작 시
+DIContainer.shared.register(type: DesignService.self) {
+    DesignService()
+}
+
+DIContainer.shared.register(type: DesignRepository.self) {
+    DesignRepository()
+}
+```
+
+## 의존성 주입 사용
+```swift
+class DesignViewModel: ObservableObject {
+    private let designService: DesignService
+    
+    init() {
+        self.designService = DIContainer.shared.resolve(DesignService.self)
+    }
+}
+```
+
+## 서비스 네이밍 규칙
+- 서비스: `{FeatureName}Service`
+- 리포지토리: `{FeatureName}Repository`
+- 매니저: `{FeatureName}Manager`

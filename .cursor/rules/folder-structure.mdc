@@ -1,0 +1,157 @@
+---
+alwaysApply: true
+---
+# 폴더 구조 가이드
+
+## View 폴더 구조 규칙
+
+### 1. 탭별 분리
+- `View/SwiftUI/`: SwiftUI로 구현된 모든 뷰 (순수 SwiftUI 구현)
+- `View/UIKit/`: UIKit 탭의 뷰 (SwiftUI 기반 화면 전환, 내부 디자인 화면만 UIKit)
+
+### 2. 카테고리별 분류
+각 탭 내부는 카테고리별로 폴더를 구성:
+```
+View/SwiftUI/
+├── SwiftUITab/             # 탭 루트 뷰 폴더
+│   └── SwiftUITabView.swift
+├── Animation/              # 애니메이션 카테고리 (animation)
+├── Interaction/            # 상호작용 카테고리 (interaction)
+└── ...                     # 기타 카테고리들
+```
+
+View/UIKit/
+├── UIKitTabView.swift      # SwiftUI로 구현된 UIKit 탭 루트 뷰
+├── Animation/              # UIKit 디자인 화면들 (UIViewControllerRepresentable로 통합)
+├── Interaction/            # UIKit 디자인 화면들 (UIViewControllerRepresentable로 통합)
+└── ...                     # 기타 카테고리들
+```
+
+View/Common/                # 공통 뷰 컴포넌트
+└── ...                     # 공통으로 사용되는 뷰들
+```
+
+### 3. 기능별 폴더 구성
+각 카테고리 내부는 개별 기능별로 폴더를 구성:
+
+#### SwiftUI 탭 (순수 SwiftUI 구현)
+```
+Animation/
+├── SimpleAnimation/        # 단순한 애니메이션
+│   └── SimpleAnimationView.swift
+├── ComplexAnimation/       # 복잡한 애니메이션 (상태 관리 필요)
+│   ├── ComplexAnimationView.swift
+│   └── ComplexAnimationViewModel.swift
+└── DataDrivenAnimation/    # 데이터 기반 애니메이션
+    ├── DataDrivenAnimationView.swift
+    ├── DataDrivenAnimationViewModel.swift
+    └── DataDrivenAnimationEntity.swift
+```
+
+#### UIKit 탭 (SwiftUI 기반 화면 전환, 내부 디자인 화면만 UIKit)
+```
+Animation/
+├── SimpleUIKitAnimation/   # 단순한 UIKit 애니메이션
+│   ├── SimpleUIKitAnimationView.swift          # UIViewControllerRepresentable
+│   └── SimpleUIKitAnimationViewController.swift # 실제 UIKit 구현체
+├── ComplexUIKitAnimation/  # 복잡한 UIKit 애니메이션
+│   ├── ComplexUIKitAnimationView.swift
+│   ├── ComplexUIKitAnimationViewController.swift
+│   └── ComplexUIKitAnimationViewModel.swift
+└── ...
+```
+
+## 파일 구성 규칙
+
+### 1. 유동적 파일 구성
+각 기능 폴더는 구현하는 디자인의 특성에 따라 필요한 파일만 구성:
+
+#### 기본 파일
+- `{FeatureName}View.swift` - 뷰 구현 (필수)
+  - SwiftUI 탭: SwiftUI 뷰 구현
+  - UIKit 탭: UIViewControllerRepresentable 래퍼
+
+#### 선택적 파일
+- `{FeatureName}ViewController.swift` - UIKit 탭에서만 필요 (실제 UIKit 구현체)
+- `{FeatureName}ViewModel.swift` - 복잡한 상태 관리가 필요한 경우
+- `{FeatureName}Entity.swift` - 데이터 모델이 필요한 경우
+
+#### 파일 구성 예시
+```
+# 단순한 애니메이션 (데이터 불필요)
+FantasticAnimation/
+├── FantasticAnimationView.swift
+
+# 복잡한 UX 컴포넌트 (상태 관리 + 데이터 필요)
+NiceButton/
+├── NiceButtonView.swift
+├── NiceButtonViewModel.swift
+└── NiceButtonEntity.swift
+
+# UIKit 디자인 화면 (상태 관리 필요)
+DynamicCat/
+├── DynamicCatView.swift
+├── DynamicCatViewController.swift
+└── DynamicCatViewModel.swift
+```
+
+## 카테고리 분류 가이드
+
+### Animation (애니메이션)
+- 페이드, 스프링, 트랜지션 등 애니메이션 관련 기능
+- DesignCategory.animation에 해당
+
+### Interaction (상호작용)  
+- 버튼, 인터랙션, 피드백 등 사용자 상호작용 관련 기능
+- DesignCategory.interaction에 해당
+
+### Common (공통)
+- 탭에 관계없이 공통으로 사용되는 뷰 컴포넌트
+- 재사용 가능한 UI 요소들
+
+
+## 폴더 생성 규칙
+
+### 1. 새 카테고리 추가
+새로운 카테고리가 필요할 때:
+1. `View/SwiftUI/` 하위에 카테고리 폴더 생성
+2. `View/UIKit/` 하위에 동일한 카테고리 폴더 생성
+3. 카테고리명은 PascalCase로 작성
+
+### 2. 새 기능 추가
+새로운 기능을 추가할 때:
+
+#### 공통 단계
+1. 적절한 카테고리 폴더 선택 (`View/SwiftUI/` 또는 `View/UIKit/`)
+2. 기능명으로 폴더 생성 (PascalCase)
+3. 기본 파일 생성: `{FeatureName}View.swift`
+
+#### 추가 파일 생성 (필요에 따라)
+- **상태 관리가 필요한 경우**: `{FeatureName}ViewModel.swift` 추가
+- **데이터 모델이 필요한 경우**: `{FeatureName}Entity.swift` 추가
+- **UIKit 탭인 경우**: `{FeatureName}ViewController.swift` 추가
+
+#### 파일 생성 가이드
+- **단순한 시각적 효과**: View 파일만
+- **인터랙션이 있는 컴포넌트**: View + ViewModel
+- **데이터를 다루는 기능**: View + ViewModel + Entity
+- **UIKit 디자인 화면**: View(UIViewControllerRepresentable) + ViewController + (선택적 ViewModel/Entity)
+
+## 파일 위치 규칙
+
+### 1. 탭 루트 뷰
+- `SwiftUITabView.swift`: SwiftUI 탭의 루트 뷰 (View/SwiftUI/SwiftUITab/ 폴더에 위치)
+- `UIKitTabView.swift`: UIKit 탭의 루트 뷰 (View/UIKit/ 폴더 최상위에 위치)
+
+### 2. 기능별 뷰
+- 각 기능 폴더 내부에 위치
+- 카테고리별로 분류되어 관리
+
+### 3. 공통 파일
+- 앱 진입점: `App/` 폴더
+- 코디네이터: `Coordinator/Core/` 폴더 (핵심 구현)
+- 탭별 코디네이터: `Coordinator/SwiftUI/`, `Coordinator/UIKit/` 폴더
+- 데이터 모델: `Model/` 폴더 (DesignCategory, DesignItem 등)
+- 의존성 주입: `DI/` 폴더
+- 공통 뷰 컴포넌트: `View/Common/` 폴더
+- 리소스: `Asset/` 폴더
