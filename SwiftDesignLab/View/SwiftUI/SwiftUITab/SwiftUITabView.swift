@@ -48,6 +48,8 @@ struct SwiftUITabView: View {
                 switch destination {
                 case .fitVolume:
                     FitVolumeView()
+                case .slidePay:
+                    SlidePayView()
                 }
             }
         }

@@ -14,10 +14,11 @@ import Foundation
 enum NavigationDestination: Hashable {
     // MARK: - SwiftUI
     case fitVolume
+    case slidePay
     
     
     
     
-    
+
     // MARK: - UIKit
 }
