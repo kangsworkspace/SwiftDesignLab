@@ -1,9 +1,10 @@
 # SwiftDesignLab
 
 <div align="center">
-  <img src="img/AppIcon.png" alt="SwiftDesignLab App Icon" width="120" height="120">
+  <img src="img/AppIcon.png" alt="SwiftDesignLab App Icon" width="220" height="220">
 </div>
 
+<br/>
 좋은 디자인과 UX를 SwiftUI와 UIKit으로 구현해보는 디자인 실험실입니다.
 
 ## 프로젝트 소개
@@ -31,15 +32,15 @@ SwiftDesignLab/
 ## SwiftUI
 
 ### 1. FitVolumeView
-`FitVolumeView`는 "Nightly" 라는 앱에서 발견한 디자인입니다.
-사용자가 휴대폰 볼륨을 조절할 때 추천 볼륨과 일치하는 순간에 뷰가 하나로 합쳐집니다.
+`FitVolumeView`는 "Nightly" 라는 앱에서 발견한 디자인을 참고했습니다.  
+사용자가 휴대폰 볼륨을 조절할 때 추천 볼륨과 일치하는 순간에 뷰가 하나로 합쳐집니다.  
 타겟하는 볼륨에 맞춰지는게 시각적으로 보여서 엄청 직관적이네요.
 
 ![FitVolume Demo](img/FitVolume.gif)
 
 ### 2. SlidePayView
-`SlidePayView`는 "스타벅스" 앱에서 간편 결제를 진행할 때 발견한 디자인입니다.
-옛날 아이폰의 밀어서 잠금해제가 생각나네요. 저는 86% 이상부턴 손을 놓으면 끝까지 차도록 해두었는데,
+`SlidePayView`는 "스타벅스" 앱에서 간편 결제를 진행할 때 발견한 디자인을 참고했습니다.  
+옛날 아이폰의 밀어서 잠금해제가 생각나네요. 저는 86% 이상부턴 손을 놓으면 끝까지 차도록 해두었는데,  
 어느 지점에서 결제가 진행되는지 사용자에게 피드백이 필요할 것 같아서 햅틱 피드백을 넣어보았습니다.
 
 ![SlidePay Demo](img/SlidePay.gif)
