@@ -38,10 +38,10 @@ struct BlinkStarView: View {
     @State private var stars: [StarData] = []
     
     // 별 갯수
-    let starCount: Int = 40
+    let starCount: Int = 60
     
     // 별 색상 배열
-    let starColors: [Color] = [.yellow, .white, .mint]
+    let starColors: [Color] = [.white, .mint]
     
     // 별 애니메이션 배열
     let starAnimations: [Animation] = [
@@ -52,7 +52,7 @@ struct BlinkStarView: View {
     ]
     
     // 별 크기의 범위
-    let starSizeRange: ClosedRange<Double> = 1...20
+    let starSizeRange: ClosedRange<Double> = 1...18
     
     // 별 투명도 범위
     let starOpacityRange: ClosedRange<Double> = 0.1...0.5
