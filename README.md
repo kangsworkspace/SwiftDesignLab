@@ -48,7 +48,7 @@ SwiftDesignLab/
 ### 3. BlinkStarView
 `BlinkStarView`는 "Tesseract" 앱의 온보딩 디자인의 배경화면을 보고 참고했습니다.  
 해당 앱은 고정된 위치에서 별이 깜빡이는데, 랜덤성을 주면 더 재밌을 것 같아,  
-별들의 위치, 색상, 애니메이션 크기 등을 랜덤하게 나오도록 설정했습니다.
+별들의 위치, 색상, 애니메이션, 속도, 크기 등 최대한 랜덤하게 나오도록 설정했습니다.
 
 ![SlidePay Demo](img/BlinkStar.gif)
 
