@@ -15,9 +15,7 @@ enum NavigationDestination: Hashable {
     // MARK: - SwiftUI
     case fitVolume
     case slidePay
-    
-    
-    
+    case blinkStar
     
 
     // MARK: - UIKit

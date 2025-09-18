@@ -15,17 +15,24 @@ struct DesignItemList {
     static let swiftUI: [DesignItem] = [
         DesignItem(
             title: "볼륨 일치시키기",
-            description: "나이틀리라는 앱에서 볼륨을 일치시킬 때 나오는 애니메이션입니다. 하나로 합쳐지는 애니메이션이 깔끔해서 구현해봤어요",
+            description: "나이틀리라는 앱에서 볼륨을 일치시킬 때 나오는 애니메이션을 참고했습니다. 하나로 합쳐지는 애니메이션이 깔끔하네요",
             category: .animation,
             tags: ["볼륨", "나이틀리"],
             navigationDestination: .fitVolume
         ),
         DesignItem(
             title: "밀어서 결제하기",
-            description: "스타벅스에서 간편결제 할 때 하단에 나오는 밀어서 결제하기를 구현해봤습니다. 추가 progress가 일정 수준에서 자동으로 채워주는데 사용자한테 어느 시점부터 결제가 되는 pregress인지 피드백이 필요할 거 같아 햅틱 피드백을 넣어봤어요",
+            description: "스타벅스에서 간편결제 할 때 하단에 나오는 밀어서 결제하기를 참고했습니다. 추가 progress가 일정 수준에서 자동으로 채워주는데 사용자한테 어느 시점부터 결제가 되는 pregress인지 피드백이 필요할 거 같아 햅틱 피드백을 넣어봤어요",
             category: .interaction,
             tags: ["제스쳐", "스타벅스", "햅틱"],
             navigationDestination: .slidePay
+        ),
+        DesignItem(
+            title: "별이 빛나는 배경화면",
+            description: "Tesseract라는 앱의 온보딩 화면의 반짝이는 배경을 참고해서 여러 설정을 커스터마이징 가능하게 만들어봤습니다.",
+            category: .interaction,
+            tags: ["우주", "Tesseract"],
+            navigationDestination: .blinkStar
         ),
     ]
     

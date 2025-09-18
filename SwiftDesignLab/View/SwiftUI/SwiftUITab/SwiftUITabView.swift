@@ -50,6 +50,8 @@ struct SwiftUITabView: View {
                     FitVolumeView()
                 case .slidePay:
                     SlidePayView()
+                case .blinkStar:
+                    BlinkStarView()
                 }
             }
         }
